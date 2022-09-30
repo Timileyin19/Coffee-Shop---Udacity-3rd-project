@@ -85,7 +85,7 @@ def check_permissions(permission, payload):
             raise AuthError({
                 'code': 'invalid_permission',
                 'description': 'User not permitted to carry out this action.'
-            }, 401)
+            }, 403)
         else: 
             return True
     else: 

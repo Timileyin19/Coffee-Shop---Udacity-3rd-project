@@ -103,7 +103,7 @@ def insert_drink(payload):
 @requires_auth('patch:drinks')
 def update_drink(payload, id):
     request_body = request.get_json()
-    drink_to_update = Drink.query.filter(Drink.id == id)
+    drink_to_update = Drink.query.filter(Drink.id == id).one_or_none()
     
     if not drink_to_update: 
         abort(404)
@@ -143,7 +143,7 @@ def update_drink(payload, id):
 @app.route('/drinks/<int:id>', methods=['DELETE'])
 @requires_auth('delete:drinks')
 def delete_drink(payload, id):
-    drink_to_delete = Drink.query.filter(Drink.id == id)
+    drink_to_delete = Drink.query.filter(Drink.id == id).one_or_none()
     
     if not drink_to_delete: 
         abort(404)
@@ -212,4 +212,4 @@ def authentication_failed(error):
         'success': False,
         'error': error.status_code,
         'message': error.error
-    }), 401
+    }), error.status_code
